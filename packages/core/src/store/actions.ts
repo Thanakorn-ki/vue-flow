@@ -1,6 +1,7 @@
 import { zoomIdentity } from 'd3-zoom'
 import type { ComputedRef } from 'vue'
 import { until } from '@vueuse/core'
+import { clamp, getDimensions, getHandleBounds, getOverlappingArea, isRectObject as isRect, nodeToRect } from '@xyflow/system'
 import { useState } from './state'
 import type {
   Actions,
@@ -28,21 +29,15 @@ import {
   VueFlowError,
   addEdgeToStore,
   applyChanges,
-  clamp,
   createAdditionChange,
   createGraphNodes,
   createRemoveChange,
   createSelectionChange,
   getConnectedEdges,
-  getDimensions,
-  getHandleBounds,
-  getOverlappingArea,
   getSelectionChanges,
   isDef,
   isEdge,
   isNode,
-  isRect,
-  nodeToRect,
   parseEdge,
   updateEdgeAction,
 } from '~/utils'
@@ -631,7 +626,7 @@ export function useActions(
       return [null, null, isRectObj]
     }
 
-    const nodeRect = isRectObj ? nodeOrRect : nodeToRect(node!)
+    const nodeRect = isRectObj ? nodeOrRect : nodeToRect(node as any)
 
     return [nodeRect, node, isRectObj]
   }
@@ -649,7 +644,7 @@ export function useActions(
         return false
       }
 
-      const currNodeRect = nodeToRect(n)
+      const currNodeRect = nodeToRect(n as any)
       const overlappingArea = getOverlappingArea(currNodeRect, nodeRect)
       const partiallyVisible = partially && overlappingArea > 0
 
