@@ -1,9 +1,10 @@
 import { defineComponent, h, inject } from 'vue'
+import { getBezierPath, getSmoothStepPath } from '@xyflow/system'
 import { ConnectionLineType, ConnectionMode, Position } from '~/types'
 import { getMarkerId } from '~/utils'
 import { useVueFlow } from '~/composables'
 import { Slots } from '~/context'
-import { getBezierPath, getSimpleBezierPath, getSmoothStepPath } from '~/components/Edges/utils'
+import { getSimpleBezierPath } from '~/components/Edges/utils'
 
 const oppositePosition = {
   [Position.Left]: Position.Right,
